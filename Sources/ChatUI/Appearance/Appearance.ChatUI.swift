@@ -82,6 +82,9 @@ public struct Appearance {
     public let subtitle: Font
     /// Format of the time shown next to a message, default is 12 hour time hh:mm
     public let messageTimeFormat: String
+
+    // All images are defaulted, you can pass in an ImageAppearance to override any image
+    public let images: ImageAppearance
     
     public init(
         tint: Color = Color(.tintColor),
@@ -103,6 +106,7 @@ public struct Appearance {
         footnote: Font = .footnote,
         title: Font = .headline,
         subtitle: Font = .footnote,
+        images: ImageAppearance = ImageAppearance(),
         messageTimeFormat: String = "hh:mm"
     ) {
         self.tint = tint
@@ -119,6 +123,7 @@ public struct Appearance {
         self.prominent = prominent
         self.link = link
         self.prominentLink = prominentLink
+        self.images = images
         self.messageTimeFormat = messageTimeFormat
         
         // Font

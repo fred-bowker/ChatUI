@@ -87,97 +87,96 @@ public struct MessageField: View {
             HStack(alignment: .bottom) {
                 if isTextFieldFocused, leftSideOptions.count > 1 {
                     Button(action: onTapHiddenButton) {
-                        Image.buttonHidden.medium
-                            .tint(appearance.tint)
+                        appearance.images.buttonHidden.medium
+                                .tint(appearance.tint)
                     }
-                    .frame(width: 36, height: 36)
+                            .frame(width: 36, height: 36)
                 } else {
                     if options.contains(.menu) {
                         // More Button
                         Button(action: onTapMore) {
-                            Image.menu.medium
+                            appearance.images.menu.medium
                         }
-                        .tint(appearance.tint)
-                        .frame(width: 36, height: 36)
+                                .tint(appearance.tint)
+                                .frame(width: 36, height: 36)
                     }
-                    
+
                     // Camera Button
                     if options.contains(.camera) {
                         Button(action: onTapCamera) {
-                            Image.camera.medium
+                            appearance.images.camera.medium
                         }
-                        .tint(appearance.tint)
-                        .disabled(isMenuItemPresented)
-                        .frame(width: 36, height: 36)
+                                .tint(appearance.tint)
+                                .disabled(isMenuItemPresented)
+                                .frame(width: 36, height: 36)
                     }
-                    
+
                     // Photo Library Button
                     if options.contains(.photoLibrary) {
                         PhotosPicker(
-                            selection: $selectedItem,
-                            matching: .images,
-                            photoLibrary: .shared()
+                                selection: $selectedItem,
+                                matching: .images,
+                                photoLibrary: .shared()
                         ) {
-                            Image.photoLibrary.medium
+                            appearance.images.photoLibrary.medium
                         }
-                        .tint(appearance.tint)
-                        .disabled(isMenuItemPresented)
-                        .frame(width: 36, height: 36)
-                        .onChange(of: selectedItem) { newItem in
-                            Task {
-                                // Retrive selected asset in the form of Data
-                                if let data = try? await newItem?.loadTransferable(type: Data.self) {
-                                    self.onSelectPhoto(data: data)
+                                .tint(appearance.tint)
+                                .disabled(isMenuItemPresented)
+                                .frame(width: 36, height: 36)
+                                .onChange(of: selectedItem) { newItem in
+                                    Task {
+                                        // Retrive selected asset in the form of Data
+                                        if let data = try? await newItem?.loadTransferable(type: Data.self) {
+                                            self.onSelectPhoto(data: data)
+                                        }
+                                    }
                                 }
-                            }
-                        }
                     }
-                    
+
                     // Mic Button
                     if options.contains(.mic) {
                         Button(action: onTapMic) {
-                            Image.mic.medium
+                            appearance.images.mic.medium
                         }
-                        .tint(appearance.tint)
-                        .disabled(isMenuItemPresented)
-                        .frame(width: 36, height: 36)
+                                .tint(appearance.tint)
+                                .disabled(isMenuItemPresented)
+                                .frame(width: 36, height: 36)
                     }
                 }
-                
+
                 // TextField
                 HStack(alignment: .bottom) {
                     MessageTextField(text: $text, height: $textFieldHeight, characterLimit: characterLimit)
-                        .frame(height: textFieldHeight < 90 ? textFieldHeight : 90)
-                        .padding(.leading, 9)
-                        .padding(.trailing, 4)
-                        .focused($isTextFieldFocused)
-                    
+                            .frame(height: textFieldHeight < 90 ? textFieldHeight : 90)
+                            .padding(.leading, 9)
+                            .padding(.trailing, 4)
+                            .focused($isTextFieldFocused)
+
                     // Giphy Button
                     if options.contains(.giphy) {
                         Button(action: onTapGiphy) {
-                            Image.giphy.medium
+                            appearance.images.giphy.medium
                         }
-                        .tint(appearance.tint)
-                        .disabled(isMenuItemPresented)
+                                .tint(appearance.tint)
+                                .disabled(isMenuItemPresented)
                     }
                 }
-                .padding(6)
-                .background {
-                    appearance.secondaryBackground
-                        .clipShape(RoundedRectangle(cornerRadius: 18))
-                }
-                
+                        .padding(6)
+                        .background {
+                            appearance.secondaryBackground
+                                    .clipShape(RoundedRectangle(cornerRadius: 18))
+                        }
+
                 // Send Button
                 if showsSendButtonAlways || !text.isEmpty {
                     Button(action: onTapSend) {
-                        Image.send.medium
+                        appearance.images.send.medium
                     }
-                    .frame(width: 36, height: 36)
-                    .tint(appearance.tint)
-                    .disabled(text.isEmpty)
+                            .frame(width: 36, height: 36)
+                            .tint(appearance.tint)
+                            .disabled(text.isEmpty)
                 }
             }
-            .padding(16)
             
             if isVoiceFieldPresented {
                 VoiceField(isPresented: $isVoiceFieldPresented)
